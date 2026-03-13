@@ -1,0 +1,95 @@
+import 'package:flutter/material.dart';
+import 'package:news_application/core/common_constants.dart';
+import 'package:news_application/model/recent_model.dart';
+import 'package:news_application/model/save_model.dart';
+
+class NewsState extends ChangeNotifier{
+  List<SaveModel> _saveProducts = [];
+  List<RecentModel> _viewProducts = [];
+  
+  List<SaveModel> get saveProducts => _saveProducts;
+  List<RecentModel> get viewProducts => _viewProducts;
+
+  NewsState(){
+    loadSaveData();
+    loadRecentData();
+  }
+
+  bool isSaved(SaveModel save) => _saveProducts.contains(save);
+
+  void toggleSaveData(SaveModel save) async{
+    if (_saveProducts.contains(save)){
+      _saveProducts.remove(save);
+      await removeSaveData(save.userId);
+    } else {
+      _saveProducts.add(save);
+      await addSaveData(save);
+    }
+  }
+
+  void toggleRecentViewData(RecentModel recent) async{
+    if (_viewProducts.contains(recent)) {
+      _viewProducts.remove(recent);
+      await removeRecentData(recent.userId);
+    }else {
+      _viewProducts.add(recent);
+      await addRecentData(recent);
+    }
+  }
+
+  Future<void> addSaveData(SaveModel save) async{
+    try {
+      await supabase.from(saveTable).insert(save.toMap());
+    } catch (e) {
+      print("Error: $e");
+      rethrow;
+    }
+  }
+
+  Future<void> addRecentData(RecentModel recent) async{
+    try {
+      await supabase.from(recentTable).insert(recent.toMap());
+    } catch (e) {
+      print("Error: $e");
+      rethrow;
+    }
+  }
+
+  Future<void> removeSaveData(String id) async{
+    try {
+      await supabase.from(saveTable).delete().eq("userId", id);
+    } catch (e) {
+      print("Error: $e");
+      rethrow;
+    }
+  }
+
+  Future<void> removeRecentData(String id) async {
+    try {
+      await supabase.from(recentTable).delete().eq("userId", id);
+    } catch (e) {
+      print("Error: $e");
+      rethrow;
+    }
+  }
+
+  Future<void> loadSaveData() async{
+    try {
+      final data = await supabase.from(saveTable).select();
+      _saveProducts = data.map((e) => SaveModel.fromMap(e)).toList();
+    } catch (e) {
+      print("Error: $e");
+      rethrow;
+    }
+  }
+
+  Future<void> loadRecentData() async{
+    try {
+      final data = await supabase.from(recentTable).select();
+      _viewProducts = data.map((e) => RecentModel.fromMap(e)).toList();
+    } catch (e) {
+      print("Error: $e");
+      rethrow;
+    }
+  }
+}
