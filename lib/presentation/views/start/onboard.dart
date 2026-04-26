@@ -18,7 +18,11 @@ class _OnboardState extends State<Onboard> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(gradient: AppColors.backgroundGradients),
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage("assets/images/mobile_bg.jpg")
+        )
+      ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: Center(

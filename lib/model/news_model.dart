@@ -1,6 +1,8 @@
+import 'package:news_application/model/file_model.dart';
+
 class NewsModel {
   late String newsId;
-  late List<String> file;
+  late List<FileModel> file;
   late String title;
   late String tag;
   late String summary;
@@ -24,7 +26,7 @@ class NewsModel {
   factory NewsModel.fromMap(Map<String, dynamic> data){
     return NewsModel(
       newsId: data['newsId'] ?? "", 
-      file: List<String>.from(data['file'] ?? []), 
+      file: List<FileModel>.from(data['file'] ?? []), 
       title: data['title'] ?? "",
       tag: data['tag'] ?? "", 
       summary: data['summary'] ?? "", 
@@ -57,5 +59,17 @@ class NewsModel {
       'summary': summary,
       'details': details,
     };
+  }
+  NewsModel.empty(){
+    newsId = "";
+    file = [];
+    title = "";
+    tag = "";
+    summary = "";
+    details = "";
+    userId = "";
+    createdAt = DateTime.now();
+    views = 0;
+    likes = [];
   }
 }

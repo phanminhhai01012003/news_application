@@ -1,3 +1,4 @@
+import 'package:news_application/model/support_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 //supabase
@@ -41,3 +42,29 @@ String saveTable = "save";
 String recentTable = "recent";
 String commentTable = "comment";
 String tagTable = "tag";
+
+List<SupportModel> supports = [
+  SupportModel(
+    question: "Làm thế nào để đăng tải/cập nhật 1 bài báo lên?", 
+    answer: """
+      Nếu bạn là một nhà báo/phóng viên, bạn hãy vào mục Bài báo của tôi, 
+      nhấn dấu + ở góc dưới bên phải màn hình, điền đầy đủ thông tin gồm:  
+      Ảnh (file, tiêu đề ảnh), tiêu đề báo, chọn thể loại, tóm tắt, chi tiết. 
+      Sau đó nhấn đăng/cập nhật để công khai thông tin của bạn đến công chúng. 
+      Tuy nhiên để đảm bảo tính minh bạch của tin tức, bạn cần phải cung cấp 
+      nơi công tác của bạn kèm theo các loại giấy tờ (nếu có)
+    """
+  ),
+  SupportModel(
+    question: "", 
+    answer: ""
+  ),
+  SupportModel(
+    question: "", 
+    answer: ""
+  ),
+  SupportModel(
+    question: "", 
+    answer: ""
+  ),
+];

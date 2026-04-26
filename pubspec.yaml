@@ -75,6 +75,7 @@ flutter:
   assets:
     - assets/images/tg.png
     - assets/images/user.png
+    - assets/images/mobile_bg.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

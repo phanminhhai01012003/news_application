@@ -8,12 +8,4 @@ class AppColors {
   static Color white = Colors.white;
   static Color grey = Colors.grey.shade700;
   static Color yellow = Color.fromARGB(255, 244, 222, 23);
-  static Gradient backgroundGradients = LinearGradient(
-    colors: [
-      Color(0xFF150EE2),
-      Color.fromARGB(255, 222, 7, 7),
-      Color.fromARGB(255, 4, 152, 9),
-    ],
-    stops: [0.1, 0.25, 0.5, 0.75]
-  );
 }

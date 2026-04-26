@@ -56,7 +56,12 @@ class _SetupScreenState extends State<SetupScreen> {
                   ),
                   Selection(
                     icon: Icons.rule, 
-                    title: "Điều khoản", 
+                    title: "Điều khoản sử dụng", 
+                    onTap: (){}
+                  ),
+                  Selection(
+                    icon: Icons.privacy_tip, 
+                    title: "Quyền riêng tư", 
                     onTap: (){}
                   ),
                   Selection(

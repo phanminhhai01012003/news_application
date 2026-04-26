@@ -22,7 +22,7 @@ class _NewsDisplayListState extends State<NewsDisplayList> {
         leading: ClipRRect(
           borderRadius: BorderRadius.circular(12),
           child: Image.network(
-            widget.news.file.first,
+            widget.news.file.first.fileName,
             width: 50,
             height: 50,
             fit: BoxFit.cover,

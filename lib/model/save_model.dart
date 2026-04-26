@@ -21,4 +21,9 @@ class SaveModel {
       'newsId': newsId
     };
   }
+  SaveModel.empty(){
+    saveId = "";
+    userId = "";
+    newsId = "";
+  }
 }

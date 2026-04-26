@@ -58,4 +58,16 @@ class UserModel {
       'phone': phone
     };
   }
+  UserModel.empty(){
+    id = "";
+    userName = "";
+    description = "";
+    dateOfBirth = DateTime.now();
+    avatar = "";
+    phone = "";
+    role = "";
+    email = "";
+    password = "";
+    loginMethod = "";
+  }
 }

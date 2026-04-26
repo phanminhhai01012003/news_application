@@ -16,11 +16,12 @@ class OnAuth {
       required String email,
       required String password
   }) async{
-    firstState;
+    firstState?.call();
+    await Future.delayed(Duration(seconds: 2));
     await AuthServices.loginWithEmailPassword(email, password).then((response){
       if (response.user != null) {
         ShowResultMessage.showToastMessage("Đăng nhập thành công", AppColors.green);
-        lastState;
+        lastState?.call();
         Navigator.pushReplacement(
           context,
           AnimateNavigation(
@@ -42,7 +43,8 @@ class OnAuth {
       required String email,
       required String password
   }) async{
-    firstState;
+    firstState?.call();
+    await Future.delayed(Duration(seconds: 2));
     await AuthServices.createUser(email, password).then((response) async{
       if (response.user != null) {
         UserModel userModel = UserModel(
@@ -63,7 +65,7 @@ class OnAuth {
           password: password, 
           phone: phone
         );
-        lastState;
+        lastState?.call();
         ShowResultMessage.showToastMessage("Đăng ký thành công", AppColors.green);
         Navigator.pushReplacement(
           context, 

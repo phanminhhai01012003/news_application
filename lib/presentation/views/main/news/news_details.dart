@@ -19,6 +19,7 @@ class NewsDetails extends StatefulWidget {
 
 class _NewsDetailsState extends State<NewsDetails> {
   bool isLiked = false;
+  bool isSaved = false;
   void toggleLikePost() {
     setState(() {
       isLiked = !isLiked;
@@ -32,6 +33,7 @@ class _NewsDetailsState extends State<NewsDetails> {
     // TODO: implement initState
     super.initState();
     isLiked = widget.news.likes.any((likes) => likes['id'] == supabase.auth.currentUser!.id);
+    isSaved = context.read<NewsState>().saveProducts.any((save) => save.newsId == widget.news.newsId);
   }
   @override
   Widget build(BuildContext context) {
@@ -74,7 +76,7 @@ class _NewsDetailsState extends State<NewsDetails> {
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     fit: BoxFit.cover,
-                    image: NetworkImage(widget.news.file[index])
+                    image: NetworkImage(widget.news.file[index].fileName)
                   )
                 ),
               ),
@@ -148,10 +150,19 @@ class _NewsDetailsState extends State<NewsDetails> {
                   )
                 ),
                 IconButton(
-                  onPressed: () => context.read<NewsState>().toggleSaveData(save), 
+                  onPressed: () {
+                    setState(() {
+                      isSaved = !isSaved;
+                    });
+                    if (isSaved) {
+                      context.read<NewsState>().addSave(save);
+                    } else {
+                      context.read<NewsState>().removeSave(save);
+                    }
+                  }, 
                   icon: Icon(
-                    context.read<NewsState>().isSaved(save) ? Icons.bookmark : Icons.bookmark_border,
-                    color: context.read<NewsState>().isSaved(save) ? AppColors.yellow : AppColors.grey,
+                    isSaved ? Icons.bookmark : Icons.bookmark_border,
+                    color: isSaved ? AppColors.yellow : AppColors.grey,
                     size: 20,
                   )
                 ),

@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:news_application/common/other/animate_navigation.dart';
 import 'package:news_application/core/app_colors.dart';
-import 'package:news_application/presentation/views/main/news/add_edit_item.dart';
+import 'package:news_application/core/app_routes.dart';
 
 class MyOwnNews extends StatefulWidget {
   const MyOwnNews({super.key});
@@ -47,7 +47,7 @@ class _MyOwnNewsState extends State<MyOwnNews> {
           Navigator.push(
             context,
             AnimateNavigation(
-              child: AddEditItem(news: null), 
+              child: newsItem(null), 
               begin: Offset(0, 1)
             )
           );

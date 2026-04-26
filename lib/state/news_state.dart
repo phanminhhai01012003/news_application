@@ -15,26 +15,24 @@ class NewsState extends ChangeNotifier{
     loadRecentData();
   }
 
-  bool isSaved(SaveModel save) => _saveProducts.contains(save);
-
-  void toggleSaveData(SaveModel save) async{
-    if (_saveProducts.contains(save)){
-      _saveProducts.remove(save);
-      await removeSaveData(save.userId);
-    } else {
-      _saveProducts.add(save);
-      await addSaveData(save);
-    }
+  void addSave(SaveModel save) async{
+    _saveProducts.add(save);
+    await addSaveData(save);
   }
 
-  void toggleRecentViewData(RecentModel recent) async{
-    if (_viewProducts.contains(recent)) {
-      _viewProducts.remove(recent);
-      await removeRecentData(recent.userId);
-    }else {
-      _viewProducts.add(recent);
-      await addRecentData(recent);
-    }
+  void removeSave(SaveModel save) async{
+    _saveProducts.remove(save);
+    await removeSaveData(save.userId);
+  }
+
+  void addRecentView(RecentModel recent) async{
+    _viewProducts.add(recent);
+    await addRecentData(recent);
+  }
+
+  void removeRecentView(RecentModel recent) async {
+    _viewProducts.remove(recent);
+    await removeRecentData(recent.userId);
   }
 
   Future<void> addSaveData(SaveModel save) async{
@@ -75,7 +73,7 @@ class NewsState extends ChangeNotifier{
 
   Future<void> loadSaveData() async{
     try {
-      final data = await supabase.from(saveTable).select();
+      final data = await supabase.from(saveTable).select().eq("userId", supabase.auth.currentUser!.id);
       _saveProducts = data.map((e) => SaveModel.fromMap(e)).toList();
     } catch (e) {
       print("Error: $e");
@@ -85,7 +83,7 @@ class NewsState extends ChangeNotifier{
 
   Future<void> loadRecentData() async{
     try {
-      final data = await supabase.from(recentTable).select();
+      final data = await supabase.from(recentTable).select().eq("userId", supabase.auth.currentUser!.id);
       _viewProducts = data.map((e) => RecentModel.fromMap(e)).toList();
     } catch (e) {
       print("Error: $e");

@@ -30,7 +30,7 @@ class _NewsDisplayGridState extends State<NewsDisplayGrid> {
               ClipRRect(
                 borderRadius: BorderRadius.circular(12),
                 child: Image.network(
-                  widget.news.file.first,
+                  widget.news.file.first.fileName,
                   height: 50,
                   width: double.infinity,
                   fit: BoxFit.cover,

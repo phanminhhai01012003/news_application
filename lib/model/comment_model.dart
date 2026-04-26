@@ -30,4 +30,11 @@ class CommentModel {
     };
   }
   Map<String, dynamic> updateContent() => {'content': content};
+  CommentModel.empty(){
+    commentId = "";
+    userId = "";
+    content = "";
+    createdAt = DateTime.now();
+    likes = [];
+  }
 }

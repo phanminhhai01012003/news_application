@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:news_application/core/app_colors.dart';
+import 'package:news_application/core/common_constants.dart';
 import 'package:news_application/core/convert.dart';
 import 'package:news_application/model/support_model.dart';
 
@@ -11,25 +12,15 @@ class Support extends StatefulWidget {
 }
 
 class _SupportState extends State<Support> {
-  bool isOpen = false;
-  List<SupportModel> supports = [
-    SupportModel(
-      question: "", 
-      answer: ""
-    ),
-    SupportModel(
-      question: "", 
-      answer: ""
-    ),
-    SupportModel(
-      question: "", 
-      answer: ""
-    ),
-    SupportModel(
-      question: "", 
-      answer: ""
-    ),
-  ];
+  Set<SupportModel> open = {};
+  void onOpen(SupportModel model) {
+    if (open.contains(model)){
+      open.remove(model);
+    } else {
+      open.add(model);
+    }
+    setState(() {});
+  }
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -65,13 +56,9 @@ class _SupportState extends State<Support> {
                       ),
                     ),
                     IconButton(
-                      onPressed: () {
-                        setState(() {
-                          isOpen = !isOpen;
-                        });
-                      },
+                      onPressed: () => onOpen(supports[index]),
                       icon: Icon(
-                        isOpen ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
+                        open.contains(supports[index]) ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
                         size: 20,
                         color: theme.colorScheme.onSecondary,
                       ),
@@ -81,7 +68,7 @@ class _SupportState extends State<Support> {
               ),
               SizedBox(height: 20),
               Visibility(
-                visible: isOpen,
+                visible: open.contains(supports[index]),
                 child: Text(
                   supports[index].answer,
                   style: TextStyle(

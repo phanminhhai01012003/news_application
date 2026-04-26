@@ -8,6 +8,7 @@ import 'package:news_application/common/other/show_result_message.dart';
 import 'package:news_application/core/app_colors.dart';
 import 'package:news_application/core/common_constants.dart';
 import 'package:news_application/core/convert.dart';
+import 'package:news_application/model/file_model.dart';
 import 'package:news_application/model/news_model.dart';
 import 'package:news_application/presentation/controllers/crud_news/on_set_news.dart';
 import 'package:news_application/services/image_services.dart';
@@ -22,7 +23,7 @@ class AddEditItem extends StatefulWidget {
 
 class _AddEditItemState extends State<AddEditItem> {
   List<File> files = [];
-  List<String> filesUrlList = [];
+  List<FileModel> filesUrlList = [];
   String? selectedCategory;
   final titleController = TextEditingController();
   final summaryController = TextEditingController();
@@ -43,14 +44,27 @@ class _AddEditItemState extends State<AddEditItem> {
       loadingDialog(context);
     }
   }
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    titleController.dispose();
+    summaryController.dispose();
+    detailController.dispose();
+    super.dispose();
+  }
   void onNews() async{
     setState(() {
       isLoading = true;
     });
+    await Future.delayed(Duration(seconds: 2));
     if (files.isNotEmpty){
       final filesUrl = await ImageServices.uploadFileToStorage(files);
       if (filesUrl != null) {
-        filesUrlList.add(filesUrl);
+        FileModel model = FileModel(
+          fileName: filesUrl, 
+          desc: ""
+        );
+        filesUrlList.add(model);
       }
     }
     NewsModel newsModel = NewsModel(
@@ -168,20 +182,21 @@ class _AddEditItemState extends State<AddEditItem> {
                   children: List.generate(filesUrlList.length, (i) => Stack(
                     children: [
                       Image.network(
-                        filesUrlList[i],
+                        filesUrlList[i].fileName,
                         height: 200,
                         width: double.infinity,
                         fit: BoxFit.cover,
                       ),
                       Positioned(
-                        bottom: 10,
+                        top: 20,
                         right: 10,
                         child: Visibility(
                           visible: i != 0,
                           child: GestureDetector(
                             onTap: () {
-                              filesUrlList.removeAt(i);
-                              setState(() {});
+                              setState(() {
+                                filesUrlList.removeAt(i);
+                              });
                             },
                             child: Container(
                               width: 30,

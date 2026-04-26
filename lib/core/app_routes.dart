@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:news_application/model/news_model.dart';
 import 'package:news_application/presentation/views/authentication/forgot_password.dart';
 import 'package:news_application/presentation/views/authentication/login_method.dart';
 import 'package:news_application/presentation/views/authentication/signin.dart';
@@ -30,3 +31,4 @@ Widget get recentView => RecentView();
 Widget get saveNews => SaveNews();
 Widget get setup => SetupScreen();
 Widget get myNews => MyOwnNews();
+Widget newsItem(NewsModel? news) => newsItem(news);
